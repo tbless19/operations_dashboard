@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/dashboard/main.css">
+    <title>Dashboard</title>
+    
+    
+</head>
+<body class="cube-loader">
+    <nav>
+        <img src="{% static 'dashboard/logo.png' %}" alt="" class="logo" >
+        <h1 text-align: center;>FLIGHT OPERATIONS</h1>
+        <div class="clock" id="clock">00:00:00</div>
+    </nav>
+    <div class="section">
+      <div class="card">
+        <div class="flight-count">
+          <h1 class="flight-count-heading" style="font-size: 3em;">Flight Count</h1>
+          <h1 id="flight-count-number" style="font-size: 13rem;" text-align: center;></h1>
+        </div>  
+      </div>
+      <div class="card">
+        <div class="delivery-count">
+          <h1 class="delivery-count-heading" style="font-size: 3em;">Deliveries</h1>
+          <h1 id="delivery-count-number" style="font-size: 13rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="average-time" style="margin-top:3% ;">
+          <h2 class="average-time-heading" style="font-size: 1.5em;">Average Time</h2>
+          <h1 id="average-time-value" style="font-size: 3rem;" text-align: center;></h1>
+        </div>
+      </div>  
+	    <div class="card">
+        <div class="outbound">
+          <h1 class="outbound-heading" style="font-size: 3em;">Outbound</h1>
+          <h1 id="outbound-value" style="font-size: 12rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="inbound">
+          <h1 class="inbound-heading"style="font-size: 3em;">Inbound</h1>
+          <h1 id="inbound-value" style="font-size: 12rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="available-zips">
+          <h1 class="available-zips-heading"style="font-size: 3em;">Available zips</h1>
+          <h1 id="available-zips-value" style="font-size: 12rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="total-bats">
+          <h1 class="total-bats-heading"style="font-size: 3em;">Total Charged</h1>
+          <h1 id="total-bats-value" style="font-size: 10rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="dot3-bats">
+          <h1 class="dot3-bats-heading"style="font-size: 3em;">3-dot</h1>
+          <h1 id="dot3-bats-value" style="font-size: 10rem;" text-align: center;></h1>
+        </div>
+      </div>
+      <div class="card">
+        <div class="dot2-bats">
+          <h1 class="dot2-bats-heading"style="font-size: 3em;">2-dot</h1>
+          <h1 id="dot2-bats-value" style="font-size: 10rem;" text-align: center;></h1>
+        </div>
+      </div>
+    </div>
+    <script>
+        setInterval(showTime, 1000); 
+        function showTime() { 
+            let time = new Date(); 
+            let hour = time.getHours(); 
+            let min = time.getMinutes(); 
+            let sec = time.getSeconds(); 
+            am_pm = "AM"; 
+  
+            if (hour > 12) { 
+                hour -= 12; 
+                am_pm = "PM"; 
+            } 
+            if (hour == 0) { 
+                hr = 12; 
+                am_pm = "AM"; 
+            } 
+  
+            hour = hour < 10 ? "0" + hour : hour; 
+            min = min < 10 ? "0" + min : min; 
+            sec = sec < 10 ? "0" + sec : sec; 
+  
+            let currentTime = hour + ":"  
+                + min + ":" + sec + am_pm; 
+  
+            document.getElementById("clock") 
+                .innerHTML = currentTime; 
+        } 
+  
+        showTime();
+    </script>
+    <script>
+        let flightcount = document.getElementById('flight-count-number');
+        let deliverycount = document.getElementById('delivery-count-number');
+        let average_time = document.getElementById('average-time-value');
+        let inbound = document.getElementById("inbound-value");
+        let outbound = document.getElementById("outbound-value");
+        let available_zips = document.getElementById("available-zips-value");
+        let total_bats = document.getElementById("total-bats-value");
+        let dot3_bats = document.getElementById("dot3-bats-value");
+        let dot2_bats = document.getElementById("dot2-bats-value");
+
+        function get_data (){
+            fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                flightcount.textContent= data.flights;
+                deliverycount.textContent = data.num_delivery;
+                average_time.textContent= data.avg_time;
+                inbound.textContent= data.num_inbound;
+                outbound.textContent= data.num_outbound;
+                available_zips.textContent= data.available_zips;
+                total_bats.textContent= data.total_bats;
+                dot3_bats.textContent= data.dot3_bats;
+                dot2_bats.textContent= data.dot2_bats;  
+            })
+            .finally(() => {
+                setTimeout(get_data, 6000);
+                });
+            }
+            get_data();
+    </script>
+  </body>
+</html>

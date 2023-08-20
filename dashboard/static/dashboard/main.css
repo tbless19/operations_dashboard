@@ -1,0 +1,151 @@
+/* Reset styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Common styles for both landscape and responsive layouts */
+nav {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 9999;
+}
+
+nav .logo {
+    width: 50px;
+    height: auto;
+}
+
+nav .clock {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+nav h1 {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+
+.card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: auto;
+    max-width: 400px; /* Set a maximum width for the cards */
+    height: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+    margin-bottom: 50px;
+    margin-right: 10%; /* Adjust the margins as needed */
+    margin-left: 10%; /* Adjust the margins as needed */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    color: #ffffff;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.content .heading {
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.content .para {
+    line-height: 1.5;
+}
+
+.content .btn {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(-45deg, #22c1c3 15%, #fdbb2d 85%);
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(-45deg, #22c1c3 15%, #fdbb2d 85%);
+    z-index: -1;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.card:hover::before {
+    height: 100%;
+}
+
+.card:hover {
+    box-shadow: none;
+}
+
+.card:hover .btn {
+    color: #212121;
+    background: #e8e8e8;
+}
+
+.content .btn:hover {
+    outline: 2px solid #e8e8e8;
+    background: transparent;
+    color: #e8e8e8;
+}
+
+.content .btn:active {
+    box-shadow: none;
+}
+
+/* Landscape layout styles */
+@media (orientation: portrait) {
+    body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100vh;
+        padding-top: 100px; /* Add top padding to accommodate fixed navigation bar */
+    }
+
+    .section {
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        grid-template-rows: 30% 30% 30%;
+        border: 1px solid rgb(236, 235, 235);
+        width: 100%; /* Adjust the width as needed */
+        height: 100%; /*  120vh Adjust the height as needed */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 50px;
+        margin-right: 5%; /* Adjust the margins as needed */
+        margin-left: 5%; /* Adjust the margins as needed */
+    }
+
+    .section div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
